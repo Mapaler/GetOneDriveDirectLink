@@ -215,12 +215,12 @@ window.onload = function() //网页加载初始化
 	}
 	load_mask_local();
 
-	if (location.origin !="https://www.mapaler.com" && location.hostname !="localhost" && location.hostname != "")
+	if (location.protocol !="https:" && location.hostname !="localhost" && location.hostname != "")
 	{
 		var goto = confirm("检测到你正在使用http模式，本应用要求使用https模式。\n是否自动跳转？");
 		if (goto)
 		{
-			document.location = "https://www.mapaler.com/tools/onedrive/";
+			location.protocol = "https:";
 		}
 	}
 }
