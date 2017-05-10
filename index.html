@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>获取OneDrive直链</title>
+<link rel="icon" href="icon.png" type="image/x-png" />
+<link rel="shortcut icon" href="icon.png" type="image/x-png" />
+<link href="style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://js.live.net/v7.0/OneDrive.js"></script>
+<!--<script type="text/javascript" src="OneDrive.js"></script>-->
+<script type="text/javascript" src="script.js"></script>
+<!--<script type="text/javascript" src="debug.js"></script>-->
+</head>
+
+<body>
+	<h1>获取OneDrive直链</h1>
+	<p>本应用的目的是为了批量获取OneDrive直链，方便在其他站点外链。前身为<a href="http://bbs.comicdd.com/thread-354826-1-1.html" target="_blank">提取OneDrive直链地址工具</a>的网页版，因为原来的工具失效了，软件版也不是那么好用了，因此决定使用OneDrive官方API来进行获取，确保不失效。
+	</p>
+	<h3>隐私声明</h3>
+	<p>使用微软官方API，这里不会得到你的账号密码和其他用户资料。<br>
+	目前仅申请了Files.Read、Files.Read.Selected两个权限，API只会返回用户选择的文件的信息，不会获得其他内容。
+	</p>
+	<h3>使用方法</h3>
+	<ul class="howtouse">
+		<li>点击<span class="openbtn" title="不是点我，真的按钮在下面呢" onclick="alert('不是点我，真的按钮在下面呢')">从OneDrive选择文件</span>按钮，等待打开新窗口。</li>
+		<li>在新窗口中登陆OneDrive对应的账户并授予需要的权限。</li>
+		<li>进入OneDrive“公开”文件夹内选择需要获取直链的文件（同一文件夹内可多选），点击打开。</li>
+		<li>选择需要输出的掩码格式，输出面板内会自动生成对应的格式。</li>
+	</ul>
+<div class="picker">
+	<h3>控制面板</h3>
+	<button class="openbtn" onClick="launchOneDrivePicker()">
+		<img src="https://js.live.net/v5.0/images/SkyDrivePicker/SkyDriveIcon_white.png" style="vertical-align: middle; height: 16px;">
+		<span class="oneDriveButton">从OneDrive选择文件</span>
+	</button>
+	<!--<label><input type="checkbox" class="add-permission">主动添加访问权限（无所有人查看权限的文件）</label>-->
+	<h4>输出掩码选择</h4>
+	<div class="mask-bar">
+		<select class="mask-list" size="5" onclick="mask_select();">
+		</select>
+		<input class="mask-name" type="text" placeholder="自定义名称" />
+		<input class="mask-content" type="text" placeholder="掩码内容" />
+		<input class="mask-add" value="+" type="button" onclick="mask_add();" />
+		<input class="mask-remove" value="-" type="button" onclick="mask_remove();" />
+		<div class="tip">▲以上掩码设置保存在浏览器本地</div>
+	</div>
+</div>
+<div class="output">
+	<h3>输出面板</h3>
+	<div class="outinfo"></div>
+	<textarea class="outcontent"></textarea>
+</div>
+
+	<h3>F&amp;Q</h3>
+	<dl>
+		<dt>为什么这个应用必须要在https下运行？</dt>
+		<dd>微软的规定，非https只返回错误，我也不想。</dd>
+		<dt>为什么要把文件放在“公开”文件夹？</dt>
+		<dd>新版OneDrive只有“公开”文件夹（含子文件夹）的权限才是“所有人”，其他文件夹分享必须登录才能看到，无法成功外链。</dd>
+		<dt>OneDrive窗口里如何全选？</dt>
+		<dd>磁贴模式下：选中第一个，拉到底下，按住Shift点击最后一个，中间的就会自动选上了。</dd>
+		<dd>列表模式下：点左上角那个选中全部的复选框就行了。</dd>
+		<dt>如何收回我授予的权限？</dt>
+		<dd>访问微软账户<a href="https://account.live.com/consent/Manage" target="_blank">你已授予访问权限的应用和服务</a>删除即可。</dd>
+		<dt>如何书写掩码？</dt>
+		<dd>“file”表示该文件信息，“index”表示在获取列表中的序号，具体的JSON对象会在获取数据后发送到控制台，需要更多信息的的自己去看吧。另可参考<a href="https://github.com/Mapaler/PixivUserBatchDownload/wiki/%E6%8E%A9%E7%A0%81" target="_blank">掩码用法</a>底部的高级用法。</dd>
+		<dt>没有“公开”文件夹怎么办？</dt>
+		<dd>好像现在的新账号已经没有公开文件夹了。就需要麻烦点，添加访问通行证。<br>
+			选中需要共享的文件夹，点击嵌入<br>
+			<img src="images/Image 29.png" alt="点击嵌入"/><br>
+			在右方复制authkey及其值。将来这个文件夹内的文件及子文件夹都只需要这同一个通行码。<br>
+			<img src="images/Image 30.png" alt="复制authkey"/><br>
+			如果忘记，可以点击右上角信息符号，查看共享链接<br>
+			<img src="images/Image 31.png" alt="查看信息"/><br>
+			把authkey及其值加入到x外链地址掩码最后面，作为链接的参数，格式为“?authkey=xxxxxxx”<br>
+			<img src="images/Image 32.png" alt="修改掩码"/><br>
+		</dd>
+	</dl>
+	</p>
+
+<div class="copyright">Copyright © 2017 枫谷剑仙版权所有，本程序源代码使用GPLv3协议公开<br >Mapaler all right reserved. Source public by GPLv3.</div>
+
+</body>
+</html>
