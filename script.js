@@ -180,19 +180,22 @@ function showMask(str,file,index)
 //	console.log(rs = regMask.exec(newTxt),rs = regMask.exec(newTxt),rs = regMask.exec(newTxt),rs = regMask.exec(newTxt))
 
 	while (( rs = new RegExp(pattern).exec(newTxt) ) != null) {
-		if (rs[1] != undefined)
+        var mskO = rs[0], //包含括号的原始掩码
+            mskN = rs[1]; //去掉掩码括号
+		if (mskN != undefined)
 		{
+            mskN = (mskN != undefined) ? mskN.replace(/\\{/ig, "{").replace(/\\}/ig, "}").replace(/\\\\/ig, "\\") : null;
 			try
 			{
-				var evTemp = eval(rs[1]);
+				var evTemp = eval("(" + mskN + ")");
 				if (evTemp!=undefined)
-					newTxt = newTxt.replace(rs[0], evTemp.toString());
+					newTxt = newTxt.replace(mskO, evTemp.toString());
 				else
-					newTxt = newTxt.replace(rs[0], "");
+					newTxt = newTxt.replace(mskO, "");
 			}catch(e)
 			{
 				alert("掩码异常，详情查看控制台");
-				console.error(rs[0] + " 掩码出现了异常情况",e);
+				console.error(mskO + " 掩码出现了异常情况",e);
 			}
 		}
 	}
