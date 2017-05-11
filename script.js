@@ -187,7 +187,7 @@ function showMask(str,file,index)
             mskN = (mskN != undefined) ? mskN.replace(/\\{/ig, "{").replace(/\\}/ig, "}").replace(/\\\\/ig, "\\") : null;
 			try
 			{
-				var evTemp = eval("(" + mskN + ")");
+				var evTemp = eval(mskN);
 				if (evTemp!=undefined)
 					newTxt = newTxt.replace(mskO, evTemp.toString());
 				else
