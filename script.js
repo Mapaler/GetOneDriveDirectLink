@@ -144,8 +144,11 @@ function do_cancel()
 }
 function do_success(files)
 {
-	redata = files;
-	console.log(redata);
+	redata = files; //存入全局数组
+	console.log("本次返回 %d 个文件，数据为 %o",
+		redata.value.length,
+		redata
+	);
 	generate_output(redata);
 }
 
@@ -158,11 +161,11 @@ function generate_output(files)
 	var filearr = files.value;
 	
 	outinfo.innerHTML = "共选择 " + filearr.length + " 个文件。"
-	/*if (filearr.some(function(item){
-		return item != undefined && item.shared != undefined && item.shared.scope != "anonymous";
+	if (filearr.some(function(item){
+		return item.shared == undefined || item.shared.scope != "anonymous";
 	})){
 		outinfo.innerHTML += "存在非公共权限文件，注意添加通行许可代码。";
-	}*/
+	}
 
 	var outStrArr = filearr.map(function(item,index){
 		var outStr = showMask(mask.content,item,index);

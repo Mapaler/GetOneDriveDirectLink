@@ -3,7 +3,7 @@
 本应用的目的是为了**批量**获取OneDrive直链，方便在其他站点外链。前身为[提取OneDrive直链地址工具](http://bbs.comicdd.com/thread-354826-1-1.html)的网页版，因为原来的工具失效了，软件版也不是那么好用了，因此决定使用OneDrive官方SDK来进行获取，确保不失效。 
 
 # 马上使用
-
+该翻的自己翻  
 https://mapaler.github.io/GetOneDriveDirectLink/
 
 # 隐私声明
@@ -14,6 +14,7 @@ https://mapaler.github.io/GetOneDriveDirectLink/
 # 如何自行搭建
 按照[OneDrive file picker SDK](https://docs.microsoft.com/zh-cn/onedrive/developer/controls/file-pickers/js-v72/)内的说明，自己申请一个应用 ID，然后替换`script.js`内底部的`clientId`。  
 然后将网页的各种东西上传到你申请 ID时设置的 重定向 URL 即可。注：这个域名必须为https（仅localhost可为http）
+`odOptions.advanced.queryParameters`内容参见 [DriveItem 资源类型](https://docs.microsoft.com/zh-cn/onedrive/developer/rest-api/resources/driveitem?view=odsp-graph-online)
 
 ## 原理
 `http://storage.live.com/items/ID`是很早之前就流传的SkyDrive官方的真实直链重定向地址，出处不可考。  
