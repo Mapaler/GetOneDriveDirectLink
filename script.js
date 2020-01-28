@@ -237,7 +237,9 @@ function launchOneDrivePicker(){
 		multiSelect: true,
 		openInNewWindow: true,
 		//advanced: {createLinkParameters: { type: "embed", scope: "anonymous" }},
-		advanced: {/*queryParameters: "select=id,audio,createdBy,createdDateTime,cTag,deleted,description,eTag,file,fileSystemInfo,folder,image,lastModifiedBy,lastModifiedDateTime,location,name,package,parentReference,photo,remoteItem,searchResult,shared,sharepointIds,size,specialFolder,video,webDavUrl,webUrl"*/},
+		advanced: {
+			queryParameters: "select=audio,content,createdBy,createdDateTime,cTag,deleted,description,eTag,file,fileSystemInfo,folder,id,image,lastModifiedBy,lastModifiedDateTime,location,malware,name,package,parentReference,photo,publication,remoteItem,root,searchResult,shared,sharepointIds,size,specialFolder,video,webDavUrl,webUrl,activities,children,listItem,permissions,thumbnails,versions,@microsoft.graph.conflictBehavior,@microsoft.graph.downloadUrl,@microsoft.graph.sourceUrl"
+		},
 		success: function(files) {do_success(files); /* success handler */ },
 		cancel: function() {do_cancel(); /* cancel handler */ },
 		error: function(e) {do_error(e); /* error handler */ }
