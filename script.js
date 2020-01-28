@@ -158,11 +158,11 @@ function generate_output(files)
 	var filearr = files.value;
 	
 	outinfo.innerHTML = "共选择 " + filearr.length + " 个文件。"
-	if (filearr.some(function(item){
-		if (item.shared.scope != "anonymous") return true;
+	/*if (filearr.some(function(item){
+		return item != undefined && item.shared != undefined && item.shared.scope != "anonymous";
 	})){
 		outinfo.innerHTML += "存在非公共权限文件，注意添加通行许可代码。";
-	}
+	}*/
 
 	var outStrArr = filearr.map(function(item,index){
 		var outStr = showMask(mask.content,item,index);
@@ -237,7 +237,7 @@ function launchOneDrivePicker(){
 		multiSelect: true,
 		openInNewWindow: true,
 		//advanced: {createLinkParameters: { type: "embed", scope: "anonymous" }},
-		advanced: {queryParameters: "select=id,audio,createdBy,createdDateTime,cTag,deleted,description,eTag,file,fileSystemInfo,folder,image,lastModifiedBy,lastModifiedDateTime,location,name,package,parentReference,photo,remoteItem,searchResult,shared,sharepointIds,size,specialFolder,video,webDavUrl,webUrl"},
+		advanced: {/*queryParameters: "select=id,audio,createdBy,createdDateTime,cTag,deleted,description,eTag,file,fileSystemInfo,folder,image,lastModifiedBy,lastModifiedDateTime,location,name,package,parentReference,photo,remoteItem,searchResult,shared,sharepointIds,size,specialFolder,video,webDavUrl,webUrl"*/},
 		success: function(files) {do_success(files); /* success handler */ },
 		cancel: function() {do_cancel(); /* cancel handler */ },
 		error: function(e) {do_error(e); /* error handler */ }
