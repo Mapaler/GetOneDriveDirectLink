@@ -9,7 +9,8 @@ https://mapaler.github.io/GetOneDriveDirectLink/
 # 隐私声明
 
 使用微软官方[OneDrive file picker SDK](https://docs.microsoft.com/zh-cn/onedrive/developer/controls/file-pickers/js-v72/)，本应用不会得到你的账号密码和其他用户资料。
-目前仅申请了`Files.Read`、`Files.Read.Selected`两个权限，SDK只会返回用户选择的文件的信息，不会获得未授权的其他内容。 
+目前仅申请了`Files.Read`、`Files.Read.Selected`两个权限，SDK只会返回用户选择的文件的信息，不会获得未授权的其他内容。  
+![需求的权限](https://user-images.githubusercontent.com/6565860/73927135-c82bc100-490b-11ea-9ccc-322eaed91f13.png) 
 
 # 如何自行搭建
 按照[OneDrive file picker SDK](https://docs.microsoft.com/zh-cn/onedrive/developer/controls/file-pickers/js-v72/)内的说明，自己申请一个应用 ID，然后替换`script.js`内底部的`clientId`。  
