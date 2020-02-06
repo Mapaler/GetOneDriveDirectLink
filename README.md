@@ -13,7 +13,9 @@ https://mapaler.github.io/GetOneDriveDirectLink/
 
 # 如何自行搭建
 按照[OneDrive file picker SDK](https://docs.microsoft.com/zh-cn/onedrive/developer/controls/file-pickers/js-v72/)内的说明，自己申请一个应用 ID，然后替换`script.js`内底部的`clientId`。  
-然后将网页的各种东西上传到你申请 ID时设置的 重定向 URL 即可。注：这个域名必须为https（仅localhost可为http）
+将网页的各种东西上传到你申请 ID时设置的 重定向 URL 即可，页面 URL 不在重定向内会发生错误。注：这个页面必须为https（仅localhost可为http）  
+![重定向图示](https://user-images.githubusercontent.com/6565860/73926533-c0b7e800-490a-11ea-8ae7-7fb2c3047da2.png)  
+
 `odOptions.advanced.queryParameters`内容参见 [DriveItem 资源类型](https://docs.microsoft.com/zh-cn/onedrive/developer/rest-api/resources/driveitem?view=odsp-graph-online)
 
 ## 原理
