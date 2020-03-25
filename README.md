@@ -19,7 +19,7 @@ https://mapaler.github.io/GetOneDriveDirectLink/
 ![客户端ID](document/clientID.png)  
 其中`odOptions.advanced.queryParameters`内容参见 [DriveItem 资源类型](https://docs.microsoft.com/onedrive/developer/rest-api/resources/driveitem?view=odsp-graph-online)，若不设定，将只返回基本信息。
 1. 设置**身份验证**  
-将网页的各种东西上传到你申请 ID时设置的 重定向 URL 即可，页面 URL 不在重定向内会发生错误。注：这个页面必须为https（以前仅localhost可为http）  
+将网页的各种东西上传到你申请 ID时设置的 重定向 URL 即可，页面 URL 不在重定向内会发生错误。注：这个页面必须为https（仅 localhost 可为 http，且 localhost 也需添加 重定向 URL）  
 并且需要勾选**隐式授权**的**访问令牌**、**ID 令牌**。*讨论见[#9](//github.com/Mapaler/GetOneDriveDirectLink/issues/9)*
 ![身份验证](document/authentication.png)
 1. 设置**API 权限**  

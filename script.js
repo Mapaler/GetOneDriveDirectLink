@@ -1,4 +1,4 @@
-// JavaScript Document
+const curMaskVersion = 2; //当前的掩码设置版本，用于检测是否更新
 
 //仿GM_getValue函数v1.0
 if(typeof(GM_getValue) == "undefined")
@@ -55,13 +55,14 @@ var maskObj = function(name,content) //一个掩码对象
 	return this;
 };
 var masks = new Array(); //储存掩码数组
-var curMask = 0; //当前选中的掩码
+var mask_list = null; //掩码列表框
+var mask_name = null;
+var mask_content = null;
+var outinfo = null;
+var outcontent = null;
 
 function mask_add()
 {
-	var mask_list = document.getElementsByClassName("mask-list")[0];
-	var mask_name = document.getElementsByClassName("mask-name")[0];
-	var mask_content = document.getElementsByClassName("mask-content")[0];
 	if (mask_name.value.length>0 && mask_content.value.length>0)
 	{
 		addNewMask(mask_name.value,mask_content.value);
@@ -77,7 +78,6 @@ function mask_add()
 //从文本添加一个新的掩码
 function addNewMask(name,content)
 {
-	var mask_list = document.getElementsByClassName("mask-list")[0];
 	var mask = new maskObj(name,content);
 	masks.push(mask);
 	var opt = new Option(name + " : " + content, content);
@@ -85,13 +85,14 @@ function addNewMask(name,content)
 }
 function mask_remove()
 {
-	var mask_list = document.getElementsByClassName("mask-list")[0];
-	var mask_name = document.getElementsByClassName("mask-name")[0];
-	var mask_content = document.getElementsByClassName("mask-content")[0];
 	if(mask_list.selectedIndex>=0)
 	{
+		let lastSelectedIndex = mask_list.selectedIndex;
 		masks.splice(mask_list.selectedIndex, 1);
 		mask_list.remove(mask_list.selectedIndex);
+		mask_list.selectedIndex = (lastSelectedIndex<mask_list.options.length) ?
+									lastSelectedIndex :
+									(mask_list.options.length-1);
 	}else
 	{
 		alert("没有选中掩码");
@@ -100,9 +101,6 @@ function mask_remove()
 }
 function mask_select()
 {
-	var mask_list = document.getElementsByClassName("mask-list")[0];
-	var mask_name = document.getElementsByClassName("mask-name")[0];
-	var mask_content = document.getElementsByClassName("mask-content")[0];
 	mask_name.value = masks[mask_list.selectedIndex].name;
 	mask_content.value = masks[mask_list.selectedIndex].content;
 	if (redata) generate_output(redata); //重新生成
@@ -110,14 +108,12 @@ function mask_select()
 }
 function save_mask_local() //把掩码设置保存到本地
 {
-	var mask_list = document.getElementsByClassName("mask-list")[0];
 	var maskstr = JSON.stringify(masks);
 	GM_setValue("godl-masks",maskstr);
 	GM_setValue("godl-mask-index",mask_list.selectedIndex);
 }
 function load_mask_local() //从空白加载设置
 {
-	var mask_list = document.getElementsByClassName("mask-list")[0];
 	var maskstr = GM_getValue("godl-masks");
 	if (maskstr) //没有设置时就不保存了
 	{
@@ -132,14 +128,11 @@ function load_mask_local() //从空白加载设置
 
 function do_error(e)
 {
-	var outinfo = document.getElementsByClassName("outinfo")[0];
-	var outcontent = document.getElementsByClassName("outcontent")[0];
 	outinfo.innerHTML = "发生错误";
 	outcontent.value = e.toString();
 }
 function do_cancel()
 {
-	var outinfo = document.getElementsByClassName("outinfo")[0];
 	outinfo.innerHTML = "取消操作";
 }
 function do_success(files)
@@ -154,10 +147,7 @@ function do_success(files)
 
 function generate_output(files)
 {
-	var mask_list = document.getElementsByClassName("mask-list")[0];
-	var outinfo = document.getElementsByClassName("outinfo")[0];
-	var outcontent = document.getElementsByClassName("outcontent")[0];
-	var mask = masks[mask_list.selectedIndex];
+	var mask = masks[mask_list.selectedIndex] || masks[0];
 	var filearr = files.value;
 	
 	outinfo.innerHTML = "共选择 " + filearr.length + " 个文件。"
@@ -177,7 +167,7 @@ function generate_output(files)
 //显示掩码用
 function showMask(str,file,index)
 {
-	var newTxt = str;
+	var newTxt = eval("`" + str +"`");
 	var pattern = "%{([^}]+)}";
 	var rs = null;
 //	console.log(rs = regMask.exec(newTxt),rs = regMask.exec(newTxt),rs = regMask.exec(newTxt),rs = regMask.exec(newTxt))
@@ -210,14 +200,28 @@ var redata;//储存返回的数据
 
 window.onload = function() //网页加载初始化
 {
+	mask_list = document.querySelector(".mask-list");
+	mask_name = document.querySelector(".mask-name");
+	mask_content = document.querySelector(".mask-content");
+	outinfo = document.querySelector(".outinfo");
+	outcontent = document.querySelector(".outcontent");
 	var localarr = GM_listValues();
-	if (localarr.indexOf("godl-masks")<0) //没有掩码数据，初始化默认配置。
+	if (!localarr.includes("godl-masks") || !masks.length ||
+		(parseInt(GM_getValue("new-mask-version"),10) || 1)<curMaskVersion
+	) //没有掩码数据，初始化默认配置。
 	{
-		addNewMask("普通外链","http://storage.live.com/items/%{file.id}:/%{file.name}");
-		addNewMask("最短链接","http://storage.live.com/items/%{file.id}");
-		addNewMask("UBB代码外链图片","[img]http://storage.live.com/items/%{file.id}:/%{file.name}[/img]");
-		addNewMask("掩码使用示例","在OneDrive里查看 %{file.name} 的地址是：%{file.webUrl}");
-		addNewMask("掩码高级使用示例","%{index+1}号文件的尺寸是：%{file.size>1024?parseInt(file.size/1024)+\"KB\":file.size+\"B\"}");
+		addNewMask("普通外链","http://storage.live.com/items/${file.id}:/${file.name}");
+		addNewMask("最短链接","http://storage.live.com/items/${file.id}");
+		addNewMask("UBB代码外链图片","[img]http://storage.live.com/items/${file.id}:/${file.name}[/img]");
+		addNewMask("模板字符串基本使用示例","在OneDrive里查看 ${file.name} 的地址是：${file.webUrl}");
+		addNewMask("表达式使用示例","${index+1}号文件的尺寸是：${file.size>1024?Math.round(file.size/1024)+\"K\":file.size}B");
+		addNewMask("自动选择img/mp3 UBB代码","[${file.image?\"img\":(file.audio?\"mp3\":\"file\")}]http://storage.live.com/items/${file.id}:/${file.name}[/${file.image?\"img\":(file.audio?\"mp3\":\"file\")}]");
+		addNewMask("ES6完整文件尺寸换算示例","${index+1}号文件的尺寸是：${(function(size){const bArr = [\"B\",\"KiB\",\"MiB\",\"GiB\",\"TiB\"];for(let idx=0;idx<bArr.length;idx++){if(idx<bArr.length && size/Math.pow(1024,idx+1)>1)continue;else return (size/Math.pow(1024,idx)).toFixed(2) + \" \" + bArr[idx];}})(file.size)}");
+		addNewMask("ES6闭包函数示例1","文件的权限是：${(scope=>{switch(scope){case \"anonymous\":return \"所有人\";case \"users\":return \"仅限指定用户\";default:return \"私有\";}})(file.shared?file.shared.scope:null)}");
+		addNewMask("ES6闭包函数示例2","文件年份：${(createTime=>new Date(createTime).toLocaleString('zh-u-ca-chinese-nu-hanidec',{year:\"numeric\",month:\"long\"}))(file.createdDateTime)}");
+		if (localarr.includes("godl-masks"))
+		{addNewMask("▲以上为版本更新，重新添加的掩码示例","");}
+		GM_setValue("new-mask-version",curMaskVersion);
 	}
 	load_mask_local();
 
@@ -232,7 +236,6 @@ window.onload = function() //网页加载初始化
 }
 //OneDrive官方API格式
 function launchOneDrivePicker(){
-	var outinfo = document.getElementsByClassName("outinfo")[0];
 	outinfo.innerHTML = "正在等待API返回数据";
 	var odOptions = {
 		clientId: "d7b41a52-5bb3-43df-a20c-6259cb6a1886",

@@ -53,6 +53,12 @@
 
 	<h3>F&amp;Q</h3>
 	<dl>
+		<dt>如何书写掩码？</dt>
+		<dd>2020年3月25日新增，并<strong>推荐使用</strong>ES6原生<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/template_strings">模板字符串</a> ${表达式} 书写方式。
+			“file”表示该文件信息，“index”表示在获取列表中的序号，具体的JSON对象会在获取数据后发送到控制台（或查看全局变量 redata ），需要更多信息的的自己去看吧。</dd>
+		<dd>旧方法目前仍可用，但因为是自己实现的，因此不再推荐。旧方法请参考<a href="https://github.com/Mapaler/PixivUserBatchDownload/wiki/%E6%8E%A9%E7%A0%81" target="_blank">掩码用法</a>底部的高级用法。
+			旧方法的掩码转新写法一般简单把前面的 % 修改为 $即可，但若掩码内使用了 \ 转义符的需要去掉，掩码外需要使用 \ 和 ` 的则需加上转义符。
+			并且如果使用了变量定义，需要将其修改为闭包的函数表达式“(function(可选接收传入参数){任何代码 return 输出字符串;})(可选传入外部参数)”</dd>
 		<dt>为什么这个应用必须要在https下运行？</dt>
 		<dd>微软的规定，非https只返回错误，我也不想。</dd>
 		<dt>为什么要把文件放在“公开”文件夹？</dt>
@@ -62,8 +68,6 @@
 		<dd>列表模式下：点左上角那个选中全部的复选框就行了。</dd>
 		<dt>如何收回我授予的权限？</dt>
 		<dd>访问微软账户<a href="https://account.live.com/consent/Manage" target="_blank">你已授予访问权限的应用和服务</a>删除即可。</dd>
-		<dt>如何书写掩码？</dt>
-		<dd>“file”表示该文件信息，“index”表示在获取列表中的序号，具体的JSON对象会在获取数据后发送到控制台，需要更多信息的的自己去看吧。另可参考<a href="https://github.com/Mapaler/PixivUserBatchDownload/wiki/%E6%8E%A9%E7%A0%81" target="_blank">掩码用法</a>底部的高级用法。</dd>
 		<dt>没有“公开”文件夹怎么办？</dt>
 		<dd>好像现在的新账号已经没有公开文件夹了。就需要麻烦点，添加访问通行证。<br>
 			选中需要共享的文件夹，点击嵌入<br>

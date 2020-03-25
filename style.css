@@ -19,7 +19,7 @@ h1
 .picker
 {
 	width:500px;
-	height: 300px;
+	/*height: 300px;*/
 	padding: 10px;
 	padding-top: 0;
 	background-color: rgba(200,200,200,0.5);
@@ -42,6 +42,7 @@ h1
 .mask-list
 {
 	width: 100%;
+	height: 300px;
 	margin-bottom: 5px;
 	background-color: rgba(255,255,255,0.5);
 }
@@ -69,7 +70,7 @@ h1
 {
 	min-width: 500px;
 	width: calc(100% - 550px);
-	height: 300px;
+	/*height: 300px;*/
 	padding: 10px;
 	padding-top: 0;
 	background-color: rgba(253,224,180,0.5);
@@ -86,7 +87,8 @@ h1
 {
 	max-width: calc(100% - 6px);
 	min-width: calc(100% - 6px);
-	max-height:190px;
+	/*max-height:190px;*/
+	height: 380px;
 	min-height:190px;
 	background-color: rgba(255,255,255,0.5);
 }
