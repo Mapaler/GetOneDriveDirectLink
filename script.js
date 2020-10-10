@@ -220,6 +220,7 @@ window.onload = function() //网页加载初始化
 		addNewMask("ES6闭包函数示例1","文件的权限是：${(scope=>{switch(scope){case \"anonymous\":return \"所有人\";case \"users\":return \"仅限指定用户\";default:return \"私有\";}})(file.shared?file.shared.scope:null)}");
 		addNewMask("ES6闭包函数示例2","文件年份：${(createTime=>new Date(createTime).toLocaleString('zh-u-ca-chinese-nu-hanidec',{year:\"numeric\",month:\"long\"}))(file.createdDateTime)}");
 		addNewMask("第三方 1drv.ws 项目","${file.permissions[0].link.webUrl.replace(\"1drv.ms\",\"1drv.ws\")}");
+		addNewMask("官方图片下载直连（短期？）","${file[\"@microsoft.graph.downloadUrl\"].replace(/public\.\w+\.files/i,\"public.ch.files\")}");
 		if (localarr.includes("godl-masks"))
 		{addNewMask("▲以上为版本更新，重新添加的掩码示例","");}
 		GM_setValue("new-mask-version",curMaskVersion);

@@ -60,7 +60,8 @@
 		<dt>额外创建分享链接 是什么？</dt>
 		<dd>1drv.ws 是另一个第三方项目<a href="https://github.com/aploium/OneDrive-Direct-Link">The OneDrive Direct Download Link Helper</a>，通过获取文件的下载链接来达到外链目的。<br>
 			只需要将 1drv.<strong>m</strong>s 修改为 1drv.<strong>w</strong>s 即可。
-			因为需要后端实现对 onedrive.live.com 的重定向，因此本纯前端网页程序无法内置。</dd>
+			因为需要后端实现对 onedrive.live.com 的重定向，因此本纯前端网页程序无法内置。
+			最终重定向地址类似于“官方图片下载直连”</dd>
 		<dd>优点：直接使用生成的分享链接，不需要先嵌入，再添加 authkey。据说是香港的CDN，比较快。</dd>
 		<dd>缺点：API 必须使用 share 模式来读取数据，因为无法直接选择文件夹，因此 OneDrive “<a href="https://onedrive.live.com/?qt=sharedby">由我共享</a>”内会生成大量项目。<br>
 			该方式得到的是下载链接，并不能直接在浏览器内预览文件。</dd>
