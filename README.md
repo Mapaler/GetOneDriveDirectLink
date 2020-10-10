@@ -9,8 +9,8 @@ https://mapaler.github.io/GetOneDriveDirectLink/
 
 # 隐私声明
 
-使用微软官方[OneDrive file picker SDK](https://docs.microsoft.com/onedrive/developer/controls/file-pickers/js-v72/)，本应用不会得到你的账号密码和其他用户资料。
-目前仅申请了`Files.Read`、`Files.Read.Selected`两个权限，SDK 只会返回用户选择的文件的信息，不会获得未授权的其他内容。  
+使用微软官方 [OneDrive file picker SDK](https://docs.microsoft.com/onedrive/developer/controls/file-pickers/js-v72/)，本应用不会得到你的账号密码和其他用户资料。
+目前仅申请了 `Files.Read`、`Files.Read.Selected` 两个权限，SDK 只会返回用户选择的文件的信息，不会获得未授权的其他内容。  
 
 
 # 如何自行搭建
@@ -34,7 +34,7 @@ https://mapaler.github.io/GetOneDriveDirectLink/
 访问 `onedrive.live.com` 域名需要翻墙，但是生成的 `storage.live.com` 链接不需要。
 
 ### 1drv.ws 原理
-**1drv.ws** 是[//github.com/aploium/OneDrive-Direct-Link](The OneDrive Direct Download Link Helper) 项目的实现。  
+**1drv.ws** 是 *[The OneDrive Direct Download Link Helper](//github.com/aploium/OneDrive-Direct-Link)* 项目的实现。  
 原理为
 1. 获取OneDrive的分享链接 `https://1drv.ms/u/分享ID`
 2. 重定向到 `https://onedrive.live.com/redir?resid=文件ID&authkey=通行证`
